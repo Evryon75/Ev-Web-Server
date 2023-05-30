@@ -1,0 +1,2 @@
+# SOMETHING-Web-Server
+the name is just a PLACEHOLDER because i havent decided what to make it on... probably satisfactory since its been gnawing at my life for the past weeks lol listen listen im making a huge nuclear power plant its gonna have 300000mw of power thats gonna be 60 nuclear reactors then im gonna make plutonium and then that means EVEN MORE NUCLEAR REACTORS, better ones too, the amount of WATER ill need for this is insane, 240 WATER EXTRACTORS without the plutonium ones :) but some byproduct will cover 4 reactors, thank god for those 4 reactors right
