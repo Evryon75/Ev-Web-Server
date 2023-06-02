@@ -6,7 +6,9 @@ use axum::{
 };
 use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
-use shuttle_runtime::{tracing, tracing_subscriber};
+use shuttle_runtime::{strfmt, tracing, tracing_subscriber};
+
+//todo: add Nginx ssl reverse proxy when its done
 
 #[tokio::main]
 async fn main() {
@@ -16,56 +18,18 @@ async fn main() {
     // build our application with a route
     let app = Router::new()
         // `GET /` goes to `root`
-        .route("/", get(root))
-        // `POST /users` goes to `create_user`
-        .route("/users", post(create_user));
+        .route("/", get(root));
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    println!("listening on {:#?}", addr);
+    let addr = SocketAddr::from(([127, 0, 0, 1], 727));
+    println!("listening on http://{:#?}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
         .unwrap();
 }
 
-// basic handler that responds with a static string
-async fn root() -> Json<User> {
-    Json(
-        User {
-            id: 0,
-            username: "baller".to_string(),
-        }
-    )
-}
-
-async fn create_user(
-    // this argument tells axum to parse the request body
-    // as JSON into a `CreateUser` type
-    Json(payload): Json<CreateUser>,
-) -> (StatusCode, Json<User>) {
-    dbg!("THIS WORKS");
-    // insert your application logic here
-    let user = User {
-        id: 1337,
-        username: payload.username,
-    };
-
-    // this will be converted into a JSON response
-    // with a status code of `201 Created`
-    (StatusCode::CREATED, Json(user))
-}
-
-// the input to our `create_user` handler
-#[derive(Deserialize)]
-struct CreateUser {
-    username: String,
-}
-
-// the output to our `create_user` handler
-#[derive(Serialize)]
-struct User {
-    id: u64,
-    username: String,
+async fn root() {
+    println!("Root route")
 }
