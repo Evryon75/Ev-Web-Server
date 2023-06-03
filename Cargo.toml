@@ -12,3 +12,5 @@ axum = "0.6.18"
 shuttle-axum = "0.17.0"
 tokio = "1.28.2"
 serde = "1.0.163"
+tower = "0.4.13"
+tower-http = {version="0.4.0", features=["cors"]}

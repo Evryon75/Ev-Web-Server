@@ -2085,6 +2085,8 @@ dependencies = [
  "shuttle-axum",
  "shuttle-runtime",
  "tokio",
+ "tower",
+ "tower-http",
 ]
 
 [[package]]

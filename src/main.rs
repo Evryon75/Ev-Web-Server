@@ -1,3 +1,4 @@
+use axum::http::{header, Method, Request, Response};
 use axum::{
     http::StatusCode,
     response::IntoResponse,
@@ -7,9 +8,7 @@ use axum::{
 use serde::{Deserialize, Serialize};
 use shuttle_runtime::tracing_subscriber;
 use std::net::SocketAddr;
-
-mod data;
-
+use tower_http::cors::{Any, CorsLayer};
 
 //todo: add Nginx ssl reverse proxy when its done
 
@@ -17,11 +16,16 @@ mod data;
 async fn main() {
     // initialize tracing
     tracing_subscriber::fmt::init();
-
+    let cors = CorsLayer::new()
+        // allow `GET` and `POST` when accessing the resource
+        .allow_methods([Method::GET, Method::POST])
+        // allow requests from any origin
+        .allow_origin(Any);
     // build our application with a route
     let app = Router::new()
-        // `GET /` goes to `root`
-        .route("/", get(root));
+        .route("/", get(root))
+        .route("/test", get(test))
+        .layer(cors);
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
@@ -33,6 +37,14 @@ async fn main() {
         .unwrap();
 }
 
+async fn test() -> Json<Test> {
+    Json::from(Test { test_value: 1 })
+}
 async fn root() -> &'static str {
     "Server operational"
+}
+
+#[derive(Serialize)]
+struct Test {
+    test_value: i8,
 }
