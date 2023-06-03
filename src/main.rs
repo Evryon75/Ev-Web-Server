@@ -1,12 +1,12 @@
 use axum::{
-    routing::{get, post},
     http::StatusCode,
     response::IntoResponse,
+    routing::{get, post},
     Json, Router,
 };
 use serde::{Deserialize, Serialize};
+use shuttle_runtime::tracing_subscriber;
 use std::net::SocketAddr;
-use shuttle_runtime::{strfmt, tracing, tracing_subscriber};
 
 //todo: add Nginx ssl reverse proxy when its done
 
@@ -22,7 +22,7 @@ async fn main() {
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
-    let addr = SocketAddr::from(([127, 0, 0, 1], 727));
+    let addr = SocketAddr::from(([127, 0, 0, 1], 0448));
     println!("listening on http://{:#?}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
