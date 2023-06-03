@@ -8,6 +8,9 @@ use serde::{Deserialize, Serialize};
 use shuttle_runtime::tracing_subscriber;
 use std::net::SocketAddr;
 
+mod data;
+
+
 //todo: add Nginx ssl reverse proxy when its done
 
 #[tokio::main]
@@ -30,6 +33,6 @@ async fn main() {
         .unwrap();
 }
 
-async fn root() {
-    println!("Root route")
+async fn root() -> &'static str {
+    "Server operational"
 }
