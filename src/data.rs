@@ -5,7 +5,7 @@ use serde::Serialize;
 pub struct Repo {
     pub(crate) name: &'static str,
     pub(crate) about: &'static str,
-    pub(crate) language: Language
+    pub(crate) language: Language,
 }
 
 #[derive(Serialize, Copy, Clone, Debug, PartialEq)]
@@ -20,14 +20,14 @@ pub enum Language {
     HTML,
     MARKDOWN,
     EV,
-    NULL
+    NULL,
 }
 
 lazy_static! {
     #[derive(Serialize, Copy, Clone, Debug)]
     pub static ref REPOS: Vec<Repo> = vec![
         Repo {
-            name: "Ev-Web-Server ",
+            name: "Ev-Web-Server",
             about: "Web server i made in rust, its supposed to be homework but i figured it would fit well enough here",
             language: Language::RUST,
         },

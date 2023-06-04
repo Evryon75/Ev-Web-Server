@@ -1,5 +1,5 @@
-mod handlers;
 pub mod data;
+mod handlers;
 
 use axum::http::Method;
 use axum::{
@@ -10,8 +10,8 @@ use serde::{Deserialize, Serialize};
 use shuttle_runtime::tracing_subscriber;
 use std::net::SocketAddr;
 
-use tower_http::cors::{Any, CorsLayer};
 use crate::data::REPOS;
+use tower_http::cors::{Any, CorsLayer};
 
 //todo: add Nginx ssl reverse proxy when its done
 
@@ -23,8 +23,11 @@ async fn main() {
     let app = Router::new()
         .route("/", get(handlers::root))
         .route("/query", get(handlers::query))
-
-        .layer(CorsLayer::new().allow_methods([Method::GET, Method::POST]).allow_origin(Any));
+        .layer(
+            CorsLayer::new()
+                .allow_methods([Method::GET, Method::POST])
+                .allow_origin(Any),
+        );
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`

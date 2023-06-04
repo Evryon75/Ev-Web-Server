@@ -39,22 +39,11 @@ pub async fn query(Query(params): Query<HashMap<String, String>>) -> Json<Vec<Re
                 }
             },
         };
-        let name_eq = if query.name.eq(&String::from("NULL")) {
-            true
-        } else {
-            i.name.to_string().eq(&query.name)
-        };
-        let about_eq = if query.about.eq(&String::from("NULL")) {
-            true
-        } else {
-            i.about.to_string().eq(&query.about)
-        };
-        let language_eq = if query.language.eq(&Language::NULL) {
-            true
-        } else {
-            i.language.eq(&query.language)
-        };
-        if name_eq && about_eq && language_eq {
+        // If the query parameter is null it must mean it was not provided,
+        // and that should be treated as a generalization and let it pass through
+        if (query.name == "NULL" || i.name == query.name) &&
+            (query.about == "NULL" || i.about == query.about) &&
+            (query.language == Language::NULL || i.language == query.language) {
             result.push(i.clone());
         }
     }
